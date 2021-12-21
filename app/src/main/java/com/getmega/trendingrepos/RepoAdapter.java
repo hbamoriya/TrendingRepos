@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +39,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
     holder.repoTitle.setText(item.getAuthor());
     holder.reponame.setText(item.getName());
     holder.description.setText(item.getDescription());
+
     //used glide Library for the image view :
         boolean isExpanded = items.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
@@ -59,6 +61,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
         TextView reponame;
         TextView description;
         ConstraintLayout expandableLayout;
+        CardView cardview;
         public RepoViewHolder(View itemView){
             super(itemView);
             repoImg = (ImageView) itemView.findViewById(R.id.repoImg);
@@ -66,25 +69,52 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
             reponame =(TextView) itemView.findViewById(R.id.reponame);
             description = (TextView) itemView.findViewById(R.id.description);
             expandableLayout = itemView.findViewById(R.id.expandableLayout);
+            cardview  = itemView.findViewById(R.id.cardview1);
 
-            repoTitle.setOnClickListener(new View.OnClickListener() {
+            cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     RepoList item = items.get(getAdapterPosition());
+                    item.setExpanded(!item.isExpanded());
+                    for(int i=0;i<items.size();i++){
+                        items.get(i).setExpanded(false);
+                        notifyItemChanged(i);
+                    }
                     item.setExpanded(!item.isExpanded());
 //                    items.remove(item);
                     notifyItemChanged(getAdapterPosition());
                 }
             });
-            reponame.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    RepoList item = items.get(getAdapterPosition());
-                    item.setExpanded(!item.isExpanded());
-//                    items.remove(item);
-                    notifyItemChanged(getAdapterPosition());
-                }
-            });
+
+//            repoTitle.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    RepoList item = items.get(getAdapterPosition());
+//                    item.setExpanded(!item.isExpanded());
+//                    for(int i=0;i<items.size();i++){
+//                        items.get(i).setExpanded(false);
+//                        notifyItemChanged(i);
+//                    }
+////                    items.remove(item);
+//                    notifyItemChanged(getAdapterPosition());
+//                }
+//            });
+//            reponame.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    RepoList item = items.get(getAdapterPosition());
+////                    if (!item.isExpanded()) item.setExpanded((item.isExpanded()));
+////                    else item.setExpanded(!item.isExpanded());
+//                    for(int i=0;i<items.size();i++){
+//                        items.get(i).setExpanded(false);
+//                        notifyItemChanged(i);
+//                    }
+//                    item.setExpanded(!item.isExpanded());
+//
+////                    items.remove(item);
+//                    notifyItemChanged(getAdapterPosition());
+//                }
+//            });
 
         }
     }

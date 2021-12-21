@@ -12,6 +12,12 @@ public class RepoList {
     private String languageColor;
     private String stars;
     private String forks;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
     private boolean expanded;
 
     public RepoList(String author, String name, String description, String language, String languageColor, String stars, String forks, RepoList getItem, Image image) {
