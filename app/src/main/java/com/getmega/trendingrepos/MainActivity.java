@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.media.Image;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.List;
@@ -31,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<RepoList>> call, Response<List<RepoList>> response) {
                 List<RepoList> list = response.body();
+//                for(RepoList listItem:list){
+//                   String content =  "";
+//                   content += listItem.getAuthor() + "\n";
+//                   content += listItem.getDescription() + "\n";
+//                   content += (Image) listItem.getImage() ;
+//                }
+
                 recyclerView.setAdapter(new RepoAdapter(MainActivity.this,list));
                 Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }

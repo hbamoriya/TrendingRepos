@@ -8,7 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -32,8 +35,17 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
     @Override
     public void onBindViewHolder(@NonNull RepoViewHolder holder, int position) {
     RepoList item = items.get(position);
-    holder.repoTitle.setText(item.getName());
-    holder.repoDescrpition.setText(item.getDescription());
+    holder.repoTitle.setText(item.getAuthor());
+    holder.reponame.setText(item.getName());
+    holder.description.setText(item.getDescription());
+    //used glide Library for the image view :
+        boolean isExpanded = items.get(position).isExpanded();
+        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+
+    Glide.with(context)
+            .load(items.get(position).getImage())
+            .into(holder.repoImg);
+
     }
 
     @Override
@@ -44,12 +56,35 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
     public class RepoViewHolder extends RecyclerView.ViewHolder{
         ImageView repoImg;
         TextView repoTitle;
-        TextView repoDescrpition;
+        TextView reponame;
+        TextView description;
+        ConstraintLayout expandableLayout;
         public RepoViewHolder(View itemView){
             super(itemView);
             repoImg = (ImageView) itemView.findViewById(R.id.repoImg);
             repoTitle = (TextView) itemView.findViewById(R.id.repoTitle);
-            repoDescrpition =(TextView) itemView.findViewById(R.id.repoDescription);
+            reponame =(TextView) itemView.findViewById(R.id.reponame);
+            description = (TextView) itemView.findViewById(R.id.description);
+            expandableLayout = itemView.findViewById(R.id.expandableLayout);
+
+            repoTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    RepoList item = items.get(getAdapterPosition());
+                    item.setExpanded(!item.isExpanded());
+//                    items.remove(item);
+                    notifyItemChanged(getAdapterPosition());
+                }
+            });
+            reponame.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    RepoList item = items.get(getAdapterPosition());
+                    item.setExpanded(!item.isExpanded());
+//                    items.remove(item);
+                    notifyItemChanged(getAdapterPosition());
+                }
+            });
 
         }
     }
