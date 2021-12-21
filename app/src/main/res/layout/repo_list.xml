@@ -16,7 +16,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/repoTitle"
@@ -56,7 +56,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandableLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="205dp"
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="16dp"
@@ -65,16 +65,31 @@
                 app:layout_constraintTop_toBottomOf="@+id/reponame">
 
                 <TextView
+                    android:id="@+id/languageUsed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="stars"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/description"
+                    app:layout_constraintVertical_bias="0.395" />
+
+                <TextView
                     android:id="@+id/description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
                     android:textColor="#52575C"
                     android:textSize="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:flow_wrapMode="none"
+                    app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
