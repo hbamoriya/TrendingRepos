@@ -40,6 +40,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
     RepoList item = items.get(position);
     holder.repoTitle.setText(item.getAuthor());
     holder.reponame.setText(item.getName());
+    Glide.with(context).load(item.getAvatar()).into(holder.repoImg);
     holder.description.setText(item.getDescription());
     holder.fork.setText(item.getForks());
     holder.stars.setText(item.getStars());
@@ -49,9 +50,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
         boolean isExpanded = items.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
-    Glide.with(context)
-            .load(items.get(position).getImage())
-            .into(holder.repoImg);
+
 
     }
 
