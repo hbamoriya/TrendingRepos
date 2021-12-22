@@ -1,6 +1,7 @@
 package com.getmega.trendingrepos;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
     holder.fork.setText(item.getForks());
     holder.stars.setText(item.getStars());
     holder.lang.setText(item.getLanguage());
+    holder.lanuagecolor.setBackgroundColor(Color.parseColor(item.getLanguageColor()));
 
     //used glide Library for the image view :
         boolean isExpanded = items.get(position).isExpanded();
@@ -69,8 +71,10 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
         TextView fork;
         TextView stars;
         TextView lang;
+        TextView lanuagecolor;
         public RepoViewHolder(View itemView){
             super(itemView);
+            lanuagecolor = itemView.findViewById(R.id.lanColorButton);
             repoImg = (ImageView) itemView.findViewById(R.id.repoImg);
             repoTitle = (TextView) itemView.findViewById(R.id.repoTitle);
             reponame =(TextView) itemView.findViewById(R.id.reponame);
