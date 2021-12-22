@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder> {
@@ -39,6 +41,9 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
     holder.repoTitle.setText(item.getAuthor());
     holder.reponame.setText(item.getName());
     holder.description.setText(item.getDescription());
+    holder.fork.setText(item.getForks());
+    holder.stars.setText(item.getStars());
+    holder.lang.setText(item.getLanguage());
 
     //used glide Library for the image view :
         boolean isExpanded = items.get(position).isExpanded();
@@ -62,6 +67,9 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
         TextView description;
         ConstraintLayout expandableLayout;
         CardView cardview;
+        TextView fork;
+        TextView stars;
+        TextView lang;
         public RepoViewHolder(View itemView){
             super(itemView);
             repoImg = (ImageView) itemView.findViewById(R.id.repoImg);
@@ -70,6 +78,10 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
             description = (TextView) itemView.findViewById(R.id.description);
             expandableLayout = itemView.findViewById(R.id.expandableLayout);
             cardview  = itemView.findViewById(R.id.cardview1);
+            fork  = itemView.findViewById(R.id.forktext);
+            stars  = itemView.findViewById(R.id.startext);
+            lang  = itemView.findViewById(R.id.langtext);
+
 
             cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
