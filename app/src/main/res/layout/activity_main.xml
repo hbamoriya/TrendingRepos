@@ -15,11 +15,11 @@
         android:layout_height="wrap_content"
         android:foregroundGravity="center"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="@+id/repoList">
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <include layout="@layout/shrimmer_placeholder_layout" />
@@ -38,9 +38,6 @@
 
             <include layout="@layout/shrimmer_placeholder_layout" />
 
-            <include layout="@layout/shrimmer_placeholder_layout" />
-
-            <include layout="@layout/shrimmer_placeholder_layout" />
 
         </LinearLayout>
 
@@ -48,18 +45,34 @@
     </com.facebook.shimmer.ShimmerFrameLayout>
 
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/repoList"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="58dp"
         android:outlineAmbientShadowColor="@color/shimmerGrey"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        app:layout_constraintVertical_weight="@integer/material_motion_duration_long_1"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="@integer/material_motion_duration_long_1" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include
         android:id="@+id/include"
         layout="@layout/trending_toolbar"
-        android:paddingBottom="14dp"/>
+        android:paddingBottom="14dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

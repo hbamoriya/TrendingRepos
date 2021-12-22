@@ -22,21 +22,30 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Toolbar toolbar;
+    SwipeRefreshLayout refreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar=findViewById(R.id.MyToolBar);
-
+        refreshLayout = findViewById(R.id.refreshLayout);
         setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.repoList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+            }
+        });
 
         getData();
 
     }
 
     private void getData() {
+        refreshLayout.setRefreshing(true);
+
         Call<List<RepoList>> repoList = RepoApi.getService().getRepo();
         repoList.enqueue(new Callback<List<RepoList>>() {
             @Override
@@ -48,11 +57,15 @@ public class MainActivity extends AppCompatActivity {
                 List<RepoList> list =  response.body();
                 recyclerView.setAdapter(new RepoAdapter(MainActivity.this,list));
                 Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                refreshLayout.setRefreshing(false);
+
             }
 
             @Override
             public void onFailure(Call<List<RepoList>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error Occured", Toast.LENGTH_SHORT).show();
+                refreshLayout.setRefreshing(false);
+
             }
         });
     }
