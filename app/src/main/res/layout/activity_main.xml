@@ -7,17 +7,39 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     tools:context=".MainActivity">
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/shimmerFrameLayout"
+        android:orientation="vertical"
+        android:foregroundGravity="center">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/repoList"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintVertical_weight="@integer/material_motion_duration_long_1" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout = "@layout/shrimmer_placeholder_layout"/>
+            <include layout = "@layout/shrimmer_placeholder_layout"/>
+            <include layout = "@layout/shrimmer_placeholder_layout"/>
+            <include layout = "@layout/shrimmer_placeholder_layout"/>
+            <include layout = "@layout/shrimmer_placeholder_layout"/>
+            <include layout = "@layout/shrimmer_placeholder_layout"/>
+            <include layout = "@layout/shrimmer_placeholder_layout"/>
+            <include layout = "@layout/shrimmer_placeholder_layout"/>
+            <include layout = "@layout/shrimmer_placeholder_layout"/>
+            <include layout = "@layout/shrimmer_placeholder_layout"/>
+
+        </LinearLayout>
 
 
 
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/repoList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintVertical_weight="@integer/material_motion_duration_long_1" />
 </androidx.constraintlayout.widget.ConstraintLayout>
