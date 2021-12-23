@@ -43,8 +43,7 @@
                 android:text="This wil be the description"
                 app:layout_constraintStart_toEndOf="@+id/repoImg"
                 app:layout_constraintTop_toBottomOf="@+id/repoTitle" />
-
-            <ImageView
+            <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/repoImg"
                 android:layout_width="72dp"
                 android:layout_height="57dp"
@@ -52,7 +51,9 @@
                 android:layout_marginTop="24dp"
                 android:background="@drawable/img"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandableLayout"
