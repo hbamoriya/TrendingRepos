@@ -71,8 +71,5 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/trending_toolbar"
-        android:paddingBottom="14dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

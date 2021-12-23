@@ -34,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    Toolbar toolbar;
+//    Toolbar toolbar;
     SwipeRefreshLayout refreshLayout;
     int cacheSize = 10 * 1024 * 1024; //10MiB
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.MyToolBar);
+//        toolbar = findViewById(R.id.MyToolBar);
         refreshLayout = findViewById(R.id.refreshLayout);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.repoList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
