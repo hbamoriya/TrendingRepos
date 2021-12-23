@@ -48,27 +48,17 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/repoList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="58dp"
-        android:outlineAmbientShadowColor="@color/shimmerGrey"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="@integer/material_motion_duration_long_1" />
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/repoList"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:outlineAmbientShadowColor="@color/shimmerGrey"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/include"
+            app:layout_constraintVertical_weight="@integer/material_motion_duration_long_1"
+            tools:ignore="MissingConstraints" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
