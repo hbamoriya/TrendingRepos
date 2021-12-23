@@ -1,11 +1,8 @@
 package com.getmega.trendingrepos;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -13,7 +10,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -21,38 +17,29 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.button.MaterialButton;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
-import okhttp3.Cache;
-import okhttp3.Interceptor;
-import okhttp3.OkHttp;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-//     View errorLayout;
-//    Toolbar toolbar;
     private ConstraintLayout nointernetLayout;
     private Button tryAgainButton;
     SwipeRefreshLayout refreshLayout;
-    int cacheSize = 10 * 1024 * 1024; //10MiB
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
+//    int cacheSize = 10 * 1024 * 1024; //10MiB
+//    public static final String SHARED_PREFS = "sharedPrefs";
+//    public static final String TEXT = "text";
+    SharedPreferences Mypref;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,9 +61,14 @@ public class MainActivity extends AppCompatActivity {
         nointernetLayout = findViewById(R.id.error_layout);
         tryAgainButton=findViewById(R.id.TryAgainButton);
 //        errorLayout = findViewById(R.layout.error_layout);
+        Mypref = getApplicationContext().getSharedPreferences("Mypref",MODE_PRIVATE);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.toolbar_title_layout);
+
+        if(Mypref != null) {
+            MycachedDataBase();
+        }
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -102,6 +94,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void MycachedDataBase(){
+        String savedCache = Mypref.getString("Cache","");
+        ObjectMapper mapper = new ObjectMapper();
+        List<RepoList> savedList = null;
+        try {
+            savedList = (List<RepoList>) mapper.readValue(savedCache.getBytes(StandardCharsets.UTF_8),RepoList.class);
+            recyclerView.setAdapter(new RepoAdapter(MainActivity.this,savedList));
+        } catch (IOException e) {
+            e.printStackTrace();
+            getData();
+        }
+
+
+
+    }
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -110,20 +118,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    @
-//    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String s){
-//        getData();
-//    }
-
     private void drawLayout(){
         if(isNetworkAvailable()){
             nointernetLayout.setVisibility(View.GONE);
             refreshLayout.setVisibility(View.VISIBLE);
 
             recyclerView.setVisibility(View.VISIBLE);
-//            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//            getSupportActionBar().setCustomView(R.layout.toolbar_title_layout);
-//            getSupportActionBar().s
 
             getData();
 
@@ -143,32 +143,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void getData() {
 
-        Cache cache = new Cache(getCacheDir(), cacheSize);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .cache(cache)
-                .addInterceptor(new Interceptor() {
-                    @NonNull
-                    @Override
-                    public okhttp3.Response intercept(@NonNull Chain chain) throws IOException {
-                        Request request = chain.request();
-                        if (!isNetworkAvailable()) {
-                            int maxStale = 60 * 60 * 2; //2hrs
-                            request = request
-                                    .newBuilder()
-                                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-                                    .build();
-                        }
-                        return chain.proceed(request);
-                    }
-                })
-                .build();
-        Retrofit.Builder builder =new Retrofit.Builder()
-                .baseUrl("https://private-anon-893f88548f-githubtrendingapi.apiary-mock.com")
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create());
 
-
-        refreshLayout.setRefreshing(true);
+//        refreshLayout.setRefreshing(true);
         Call<List<RepoList>> repoList = RepoApi.getService().getRepo();
         repoList.enqueue(new Callback<List<RepoList>>() {
             @Override
@@ -178,16 +154,27 @@ public class MainActivity extends AppCompatActivity {
                 container.stopShimmer();
                 container.setVisibility(View.GONE);
 
-//                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-
-
                 List<RepoList> list = response.body();
+                ObjectMapper mapper = new ObjectMapper();
+
+                String cache = null;
+                try {
+                    cache = mapper.writeValueAsString(list);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+//                Gson gson = new Gson();
+//                String cache = gson.toJson(list);
+                /*storing cache data */
+                Mypref.edit().putString("Cache",cache);
+                /* applying to the List*/
+//                Mypref.edit().apply();
+                Mypref.edit().commit();
+//                Mypref.getString("Cache","no Data Found");
                 recyclerView.setAdapter(new RepoAdapter(MainActivity.this, list));
                 recyclerView.setVisibility(View.VISIBLE);
                 nointernetLayout.setVisibility(View.GONE);
-                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 refreshLayout.setRefreshing(false);
 
             }
@@ -197,28 +184,11 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setVisibility(View.GONE);
                 drawLayout();
                 Toast.makeText(MainActivity.this, "Error Occured", Toast.LENGTH_SHORT).show();
-//                showErrorView(t);
+
                 refreshLayout.setRefreshing(false);
 
             }
-//            private void showErrorView(Throwable throwable) {
-//                if (errorLayout.getVisibility() == View.GONE) {
-//                    errorLayout.setVisibility(View.VISIBLE);
-//                    recyclerView.setVisibility(View.GONE);
-//
-//                    // display appropriate error message
-//                    // Handling 3 generic fail cases.
-//                    if (!isNetworkAvailable()) {
-//                        errorLayout.setVisibility(View.VISIBLE);
-//                    } else {
-//                        if (throwable instanceof TimeoutException) {
-//                            errorLayout.setVisibility(View.VISIBLE);
-//                        } else {
-//                            errorLayout.setVisibility(View.VISIBLE);
-//                        }
-//                    }
-//                }
-//            }
+
         });
 
     }
