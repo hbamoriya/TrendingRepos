@@ -84,10 +84,21 @@ public class MainActivity extends AppCompatActivity {
                 getData();
             }
         });
-//        tryAgainButton.callOnClick();
+        drawLayout();
+//        tryAgainButton.setOnClickListener(new OnClick);
+//        tryAgainButton.setOnClickListener(view -> {
+//  drawLayout();
+//        });
+
+        tryAgainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawLayout();
+            }
+        });
 
 //        getData();
-        drawLayout();
+
 
     }
 
@@ -107,15 +118,27 @@ public class MainActivity extends AppCompatActivity {
     private void drawLayout(){
         if(isNetworkAvailable()){
             nointernetLayout.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+
+            recyclerView.setVisibility(View.VISIBLE);
+//            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//            getSupportActionBar().setCustomView(R.layout.toolbar_title_layout);
+//            getSupportActionBar().s
+
             getData();
+
         }
         else{
+            recyclerView.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.GONE);
             ShimmerFrameLayout container =
                     (ShimmerFrameLayout) findViewById(R.id.shimmerFrameLayout);
             container.stopShimmer();
             container.setVisibility(View.GONE);
-            getSupportActionBar().hide();
+//            getSupportActionBar().hide();
             nointernetLayout.setVisibility(View.VISIBLE);
+            boolean flag =tryAgainButton.isEnabled();
+            tryAgainButton.setEnabled(true);
         }
     }
     private void getData() {
@@ -162,6 +185,8 @@ public class MainActivity extends AppCompatActivity {
 
                 List<RepoList> list = response.body();
                 recyclerView.setAdapter(new RepoAdapter(MainActivity.this, list));
+                recyclerView.setVisibility(View.VISIBLE);
+                nointernetLayout.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 refreshLayout.setRefreshing(false);
 
@@ -169,6 +194,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<RepoList>> call, Throwable t) {
+                recyclerView.setVisibility(View.GONE);
+                drawLayout();
                 Toast.makeText(MainActivity.this, "Error Occured", Toast.LENGTH_SHORT).show();
 //                showErrorView(t);
                 refreshLayout.setRefreshing(false);

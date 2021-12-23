@@ -65,25 +65,39 @@
             android:id="@+id/TryAgainButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/noInternetText2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="164dp"
-            android:layout_marginEnd="144dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/black"
-            android:paddingHorizontal="32dp"
-            android:text="Retry"
-            android:textAllCaps="false"
-            app:cornerRadius="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="157dp"
+            android:text="Button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>
 
 
+
+<!--<Button-->
+<!--android:id="@+id/TryAgainButton"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_below="@id/noInternetText2"-->
+<!--android:layout_centerHorizontal="true"-->
+<!--android:layout_marginStart="164dp"-->
+<!--android:layout_marginEnd="144dp"-->
+<!--android:layout_marginBottom="16dp"-->
+<!--android:backgroundTint="@color/black"-->
+<!--android:paddingHorizontal="32dp"-->
+<!--android:clickable="true"-->
+<!--android:onClick='On'-->
+<!--android:text="Retry"-->
+<!--android:textAllCaps="false"-->
+<!--app:cornerRadius="16dp"-->
+<!--app:layout_constraintBottom_toBottomOf="parent"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintStart_toStartOf="parent" />-->
 
 
 
