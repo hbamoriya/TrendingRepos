@@ -26,6 +26,7 @@
                 android:layout_marginStart="34dp"
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
+                android:textSize="12dp"
                 android:maxLines="1"
                 android:text="this is title post "
                 app:layout_constraintStart_toEndOf="@+id/repoImg"
@@ -37,22 +38,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="34dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="6dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="This wil be the description"
+                android:textSize="15dp"
                 app:layout_constraintStart_toEndOf="@+id/repoImg"
                 app:layout_constraintTop_toBottomOf="@+id/repoTitle" />
+
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/repoImg"
                 android:layout_width="72dp"
                 android:layout_height="57dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/img"
+                app:layout_constraintBottom_toTopOf="@+id/expandableLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout

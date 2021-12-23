@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.Image;
@@ -17,12 +20,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.button.MaterialButton;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -37,7 +45,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
+//     View errorLayout;
 //    Toolbar toolbar;
+    private ConstraintLayout nointernetLayout;
+    private Button tryAgainButton;
     SwipeRefreshLayout refreshLayout;
     int cacheSize = 10 * 1024 * 1024; //10MiB
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -50,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.repoList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        nointernetLayout = findViewById(R.id.error_layout);
+        tryAgainButton=findViewById(R.id.TryAgainButton);
+//        errorLayout = findViewById(R.layout.error_layout);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.toolbar_title_layout);
@@ -69,8 +84,10 @@ public class MainActivity extends AppCompatActivity {
                 getData();
             }
         });
+//        tryAgainButton.callOnClick();
 
-        getData();
+//        getData();
+        drawLayout();
 
     }
 
@@ -87,6 +104,20 @@ public class MainActivity extends AppCompatActivity {
 //        getData();
 //    }
 
+    private void drawLayout(){
+        if(isNetworkAvailable()){
+            nointernetLayout.setVisibility(View.GONE);
+            getData();
+        }
+        else{
+            ShimmerFrameLayout container =
+                    (ShimmerFrameLayout) findViewById(R.id.shimmerFrameLayout);
+            container.stopShimmer();
+            container.setVisibility(View.GONE);
+            getSupportActionBar().hide();
+            nointernetLayout.setVisibility(View.VISIBLE);
+        }
+    }
     private void getData() {
 
         Cache cache = new Cache(getCacheDir(), cacheSize);
@@ -139,9 +170,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<RepoList>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error Occured", Toast.LENGTH_SHORT).show();
+//                showErrorView(t);
                 refreshLayout.setRefreshing(false);
 
             }
+//            private void showErrorView(Throwable throwable) {
+//                if (errorLayout.getVisibility() == View.GONE) {
+//                    errorLayout.setVisibility(View.VISIBLE);
+//                    recyclerView.setVisibility(View.GONE);
+//
+//                    // display appropriate error message
+//                    // Handling 3 generic fail cases.
+//                    if (!isNetworkAvailable()) {
+//                        errorLayout.setVisibility(View.VISIBLE);
+//                    } else {
+//                        if (throwable instanceof TimeoutException) {
+//                            errorLayout.setVisibility(View.VISIBLE);
+//                        } else {
+//                            errorLayout.setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//                }
+//            }
         });
+
     }
 }

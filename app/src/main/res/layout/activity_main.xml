@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     tools:context=".MainActivity">
+    <include layout = "@layout/error_layout"/>
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerFrameLayout"
