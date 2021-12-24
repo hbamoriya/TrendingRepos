@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout nointernetLayout;
     private Button tryAgainButton;
     SwipeRefreshLayout refreshLayout;
-//    int cacheSize = 10 * 1024 * 1024; //10MiB
-//    public static final String SHARED_PREFS = "sharedPrefs";
-//    public static final String TEXT = "text";
     SharedPreferences Mypref;
     private Context context ;
 
@@ -55,27 +52,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        toolbar = findViewById(R.id.MyToolBar);
         context = MainActivity.this;
         refreshLayout = findViewById(R.id.refreshLayout);
-//        setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.repoList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         nointernetLayout = findViewById(R.id.error_layout);
         tryAgainButton=findViewById(R.id.TryAgainButton);
-//        errorLayout = findViewById(R.layout.error_layout);
 
-//        Mypref = getApplicationContext().getSharedPreferences("Mypref",MODE_PRIVATE);
         Mypref = context.getSharedPreferences("Mypref",MODE_PRIVATE);
 
-//        Mypref = .getSharedPreferences("Mypref",MODE_PRIVATE);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.toolbar_title_layout);
 
-//        if(Mypref != null) {
-//            MycachedDataBase();
-//        }
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -98,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private List<Repo> getData(){
-//        SharedPreferences mypref = getPreferences(Activity.MODE_PRIVATE);
         String savedCache = Mypref.getString("Cache","");
         ObjectMapper mapper = new ObjectMapper();
         List<Repo> savedList = null;
@@ -108,9 +96,6 @@ public class MainActivity extends AppCompatActivity {
             r = mapper.readValue(savedCache,RepoList.class);
             savedList = r.getRepoList();
             return savedList;
-//            recyclerView.setAdapter(new RepoAdapter(MainActivity.this,savedList));
-//            nointernetLayout.setVisibility(View.GONE);
-//            recyclerView.setVisibility(View.VISIBLE);
         } catch (IOException e) {
             fetchDataFromApi();
             e.printStackTrace();
@@ -134,11 +119,9 @@ public class MainActivity extends AppCompatActivity {
     private void drawLayout(){
         if(getData()!=null){
             nointernetLayout.setVisibility(View.GONE);
-//            refreshLayout.setVisibility(View.VISIBLE);
             ShimmerFrameLayout container =
                     (ShimmerFrameLayout) findViewById(R.id.shimmerFrameLayout);
             container.stopShimmer();
-//            refreshLayout.setRefreshing(false);
             container.setVisibility(View.GONE);
             recyclerView.setAdapter(new RepoAdapter(MainActivity.this,getData()));
 
@@ -149,13 +132,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             recyclerView.setVisibility(View.GONE);
-//            refreshLayout.setVisibility(View.GONE);
-//            refreshLayout.setRefreshing(false);
             ShimmerFrameLayout container =
                     (ShimmerFrameLayout) findViewById(R.id.shimmerFrameLayout);
             container.stopShimmer();
             container.setVisibility(View.GONE);
-//            getSupportActionBar().hide();
             nointernetLayout.setVisibility(View.VISIBLE);
             boolean flag =tryAgainButton.isEnabled();
             tryAgainButton.setEnabled(true);
@@ -185,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }
-//                Gson gson = new Gson();
-//                String cache = gson.toJson(list);
                 /*storing cache data */
 
                 SharedPreferences.Editor editor = Mypref.edit();
@@ -194,21 +172,20 @@ public class MainActivity extends AppCompatActivity {
 
                 editor.putString("Cache",cache);
                 /* applying to the List*/
-//                Mypref.edit().apply();
                 editor.commit();
 
                 String Test = Mypref.getString("Cache","");
-//                Mypref.getString("Cache","no Data Found");
             recyclerView.setAdapter(new RepoAdapter(MainActivity.this, list));
                 recyclerView.setVisibility(View.VISIBLE);
                 nointernetLayout.setVisibility(View.GONE);
-//                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 refreshLayout.setRefreshing(false);
 
             }
 
             @Override
             public void onFailure(Call<List<Repo>> call, Throwable t) {
+                nointernetLayout.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 drawLayout();
                 Toast.makeText(MainActivity.this, "Error Occured", Toast.LENGTH_SHORT).show();
