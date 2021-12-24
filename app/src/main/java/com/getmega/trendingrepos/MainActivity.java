@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getData();
+                fetchDataFromApi();
             }
         });
         drawLayout();
@@ -134,10 +134,11 @@ public class MainActivity extends AppCompatActivity {
     private void drawLayout(){
         if(getData()!=null){
             nointernetLayout.setVisibility(View.GONE);
-            refreshLayout.setVisibility(View.VISIBLE);
+//            refreshLayout.setVisibility(View.VISIBLE);
             ShimmerFrameLayout container =
                     (ShimmerFrameLayout) findViewById(R.id.shimmerFrameLayout);
             container.stopShimmer();
+//            refreshLayout.setRefreshing(false);
             container.setVisibility(View.GONE);
             recyclerView.setAdapter(new RepoAdapter(MainActivity.this,getData()));
 
@@ -148,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             recyclerView.setVisibility(View.GONE);
-            refreshLayout.setVisibility(View.GONE);
+//            refreshLayout.setVisibility(View.GONE);
+//            refreshLayout.setRefreshing(false);
             ShimmerFrameLayout container =
                     (ShimmerFrameLayout) findViewById(R.id.shimmerFrameLayout);
             container.stopShimmer();
@@ -162,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     private void fetchDataFromApi() {
 
 
-//        refreshLayout.setRefreshing(true);
+        refreshLayout.setRefreshing(true);
         Call<List<Repo>> repoList = RepoApi.getService().getRepo();
         repoList.enqueue(new Callback<List<Repo>>() {
             @Override
