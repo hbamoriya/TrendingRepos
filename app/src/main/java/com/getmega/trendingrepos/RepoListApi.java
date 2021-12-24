@@ -7,5 +7,5 @@ import retrofit2.http.GET;
 
 public interface RepoListApi {
     @GET("repositories")
-    Call<List<RepoList>> getRepo();
+    Call<List<Repo>> getRepo();
 }

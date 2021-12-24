@@ -15,19 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder> {
     private Context context;
 
-    public RepoAdapter(Context context, List<RepoList> items) {
+    public RepoAdapter(Context context, List<Repo> items) {
         this.context = context;
         this.items = items;
     }
 
-    private List<RepoList>items;
+    private List<Repo>items;
     @NonNull
     @Override
     public RepoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,7 +36,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RepoViewHolder holder, int position) {
-    RepoList item = items.get(position);
+    Repo item = items.get(position);
     holder.repoTitle.setText(item.getAuthor());
     holder.reponame.setText(item.getName());
     Glide.with(context).load(item.getAvatar()).into(holder.repoImg);
@@ -89,7 +87,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
             cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    RepoList item = items.get(getAdapterPosition());
+                    Repo item = items.get(getAdapterPosition());
                     item.setExpanded(!item.isExpanded());
                     for(int i=0;i<items.size();i++){
                         items.get(i).setExpanded(false);

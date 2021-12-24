@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/error_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:orientation="vertical">
-<!--        android:visibility="gone"--><![CDATA[
-        >
+        <!--        android:visibility="gone"-->
 
-        ]]>
 
         <ImageView
             android:id="@+id/noInternetImage"
             android:layout_width="298dp"
             android:layout_height="390dp"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="50dp"
-            android:layout_marginBottom="90dp"
             android:src="@drawable/nointernet_connection"
-            app:layout_constraintBottom_toTopOf="@+id/TryAgainButton"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.461"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,19 +31,22 @@
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="275dp"
+            android:layout_marginTop="300dp"
             android:text="heyy"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="5dp" />
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/noInternetImage" />
 
         <TextView
             android:id="@+id/noInternetText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="24dp"
             android:text="Something Went Wrong..."
+            android:textSize="18dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button" />
@@ -57,76 +57,66 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="An Alien Probably blocking your signal"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/noInternetText1" />
 
         <Button
             android:id="@+id/TryAgainButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="160dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="157dp"
-            android:text="Button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            android:layout_marginBottom="20dp"
+
+            android:elevation="1dp"
+            android:gravity="center_horizontal"
+            android:paddingLeft="10dp"
+            android:text="Retry"
+            android:textColor="#31B057"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>
 
 
+    <!--<Button-->
+    <!--android:id="@+id/TryAgainButton"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@id/noInternetText2"-->
+    <!--android:layout_centerHorizontal="true"-->
 
-<!--<Button-->
-<!--android:id="@+id/TryAgainButton"-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_below="@id/noInternetText2"-->
-<!--android:layout_centerHorizontal="true"-->
-<!--android:layout_marginStart="164dp"-->
-<!--android:layout_marginEnd="144dp"-->
-<!--android:layout_marginBottom="16dp"-->
-<!--android:backgroundTint="@color/black"-->
-<!--android:paddingHorizontal="32dp"-->
-<!--android:clickable="true"-->
-<!--android:onClick='On'-->
-<!--android:text="Retry"-->
-<!--android:textAllCaps="false"-->
-<!--app:cornerRadius="16dp"-->
-<!--app:layout_constraintBottom_toBottomOf="parent"-->
-<!--app:layout_constraintEnd_toEndOf="parent"-->
-<!--app:layout_constraintStart_toStartOf="parent" />-->
+    <!--android:backgroundTint="@color/black"-->
+    <!--android:paddingHorizontal="32dp"-->
+    <!--android:clickable="true"-->
+    <!--android:onClick='On'-->
+    <!--android:text="Retry"-->
+    <!--android:textAllCaps="false"-->
+    <!--app:cornerRadius="16dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent" />-->
 
 
-
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:orientation="vertical">-->
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content">-->
-
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:orientation="vertical">-->
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content">-->
 
 
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--    android:layout_width="wrap_content"-->
+    <!--    android:layout_height="wrap_content">-->
 
 
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-<!--<androidx.constraintlayout.widget.ConstraintLayout-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content">-->
-
-
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
-
-
-<!--</LinearLayout>-->
+    <!--</LinearLayout>-->
