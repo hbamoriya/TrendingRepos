@@ -38,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
     private Button tryAgainButton;
     SwipeRefreshLayout refreshLayout;
     SharedPreferences Mypref;
-    private Context context ;
+    private Context context;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.repoList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         nointernetLayout = findViewById(R.id.error_layout);
-        tryAgainButton=findViewById(R.id.TryAgainButton);
+        tryAgainButton = findViewById(R.id.TryAgainButton);
 
-        Mypref = context.getSharedPreferences("Mypref",MODE_PRIVATE);
+        Mypref = context.getSharedPreferences("Mypref", MODE_PRIVATE);
 
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -85,24 +85,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-    private List<Repo> getData(){
-        String savedCache = Mypref.getString("Cache","");
+    //fecthing data from cache stored in shared preferrences
+    private List<Repo> getData() {
+        String savedCache = Mypref.getString("Cache", "");
         ObjectMapper mapper = new ObjectMapper();
         List<Repo> savedList = null;
         RepoList r = new RepoList();
 
         try {
-            r = mapper.readValue(savedCache,RepoList.class);
+            r = mapper.readValue(savedCache, RepoList.class);
             savedList = r.getRepoList();
             return savedList;
         } catch (IOException e) {
-            fetchDataFromApi();
+//            fetchDataFromApi();
             e.printStackTrace();
             return null;
 
         }
-
 
 
     }
@@ -115,32 +114,34 @@ public class MainActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 
     }
+    //setting up the layout for Data
 
-    private void drawLayout(){
-        if(getData()!=null){
+    private void drawLayout() {
+        if (getData() != null) {
             nointernetLayout.setVisibility(View.GONE);
             ShimmerFrameLayout container =
                     (ShimmerFrameLayout) findViewById(R.id.shimmerFrameLayout);
             container.stopShimmer();
             container.setVisibility(View.GONE);
-            recyclerView.setAdapter(new RepoAdapter(MainActivity.this,getData()));
+            recyclerView.setAdapter(new RepoAdapter(MainActivity.this, getData()));
 
             recyclerView.setVisibility(View.VISIBLE);
 
             getData();
 
-        }
-        else{
+        } else {
             recyclerView.setVisibility(View.GONE);
             ShimmerFrameLayout container =
                     (ShimmerFrameLayout) findViewById(R.id.shimmerFrameLayout);
             container.stopShimmer();
             container.setVisibility(View.GONE);
             nointernetLayout.setVisibility(View.VISIBLE);
-            boolean flag =tryAgainButton.isEnabled();
+            boolean flag = tryAgainButton.isEnabled();
             tryAgainButton.setEnabled(true);
         }
     }
+
+//    fetching Data From api
     private void fetchDataFromApi() {
 
 
@@ -153,8 +154,9 @@ public class MainActivity extends AppCompatActivity {
                         (ShimmerFrameLayout) findViewById(R.id.shimmerFrameLayout);
                 container.stopShimmer();
                 container.setVisibility(View.GONE);
-
+                //response from API recieved
                 List<Repo> list = response.body();
+                //converting Lits<Repo> object to JSON String for storing the cache in Shared Preferrence
                 ObjectMapper mapper = new ObjectMapper();
 
                 RepoList newrepo = new RepoList(list);
@@ -170,19 +172,19 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = Mypref.edit();
 
 
-                editor.putString("Cache",cache);
+                editor.putString("Cache", cache);
                 /* applying to the List*/
                 editor.commit();
 
-                String Test = Mypref.getString("Cache","");
-            recyclerView.setAdapter(new RepoAdapter(MainActivity.this, list));
+//                String Test = Mypref.getString("Cache", "");
+                recyclerView.setAdapter(new RepoAdapter(MainActivity.this, list));
                 recyclerView.setVisibility(View.VISIBLE);
                 nointernetLayout.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 refreshLayout.setRefreshing(false);
 
             }
-
+                //on API failure response
             @Override
             public void onFailure(Call<List<Repo>> call, Throwable t) {
                 nointernetLayout.setVisibility(View.VISIBLE);

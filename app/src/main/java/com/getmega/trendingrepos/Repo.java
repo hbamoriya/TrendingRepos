@@ -8,21 +8,20 @@ public class Repo {
     private String author;
     private String name;
     private String description;
-
-    public Repo() {
-    }
+    private boolean expanded;
 
     private String language;
     private String languageColor;
     private String stars;
     private String forks;
     private String avatar;
-
-    public String getAvatar() {
-        return avatar;
+    public Repo() {
     }
 
-    private boolean expanded;
+
+
+
+
 
     public Repo(String author, String name, String description, String language, String languageColor, String stars, String forks, Repo getItem, Image image) {
         this.author = author;
@@ -35,6 +34,10 @@ public class Repo {
         this.getItem = getItem;
         this.image = image;
         this.expanded = false;
+    }
+
+    public String getAvatar() {
+        return avatar;
     }
 
     public boolean isExpanded() {
@@ -56,6 +59,7 @@ public class Repo {
     }
 
     private Image image;
+
     @SerializedName("body")
 
     public String getName() {

@@ -46,7 +46,6 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
     holder.lang.setText(item.getLanguage());
     holder.lanuagecolor.setBackgroundColor(Color.parseColor(item.getLanguageColor()));
 
-    //used glide Library for the image view :
         boolean isExpanded = items.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
@@ -99,35 +98,6 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
                 }
             });
 
-//            repoTitle.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    RepoList item = items.get(getAdapterPosition());
-//                    item.setExpanded(!item.isExpanded());
-//                    for(int i=0;i<items.size();i++){
-//                        items.get(i).setExpanded(false);
-//                        notifyItemChanged(i);
-//                    }
-////                    items.remove(item);
-//                    notifyItemChanged(getAdapterPosition());
-//                }
-//            });
-//            reponame.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    RepoList item = items.get(getAdapterPosition());
-////                    if (!item.isExpanded()) item.setExpanded((item.isExpanded()));
-////                    else item.setExpanded(!item.isExpanded());
-//                    for(int i=0;i<items.size();i++){
-//                        items.get(i).setExpanded(false);
-//                        notifyItemChanged(i);
-//                    }
-//                    item.setExpanded(!item.isExpanded());
-//
-////                    items.remove(item);
-//                    notifyItemChanged(getAdapterPosition());
-//                }
-//            });
 
         }
     }
